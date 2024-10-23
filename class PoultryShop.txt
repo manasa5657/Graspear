@@ -1,0 +1,22 @@
+class PoultryShop:
+    def __init__(self):
+        self.weights = {'legs': 0.25, 'wings': 0.25, 'flesh': 1}
+
+    def process_order(self):
+        order = {}
+        for part in ['legs', 'wings', 'flesh']:
+            order[part] = int(input(f"Enter number of {part}: "))
+
+        whole_chickens = max(order['legs'] // 2, order['wings'] // 2, order['flesh'])
+        remaining = {part: whole_chickens * 2 - order[part] if part != 'flesh' else whole_chickens - order[part] for part in order}
+
+        print("\nOrder Summary:")
+        print(f"Total weight: {sum(order[part] * self.weights[part] for part in order)} kg")
+        print(f"Whole chickens needed: {whole_chickens}")
+        print("Remaining parts:")
+        for part, quantity in remaining.items():
+            print(f"{part.capitalize()}: {quantity} ({quantity * self.weights[part]} kg)")
+        print(f"Total remaining weight: {sum(remaining[part] * self.weights[part] for part in remaining)} kg")
+
+if __name__ == "__main__":
+    PoultryShop().process_order()
